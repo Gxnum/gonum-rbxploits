@@ -1,1 +1,1 @@
-loadstring(game:HttpGet("https://pharaohscript.xyz/free.lua", true))()
+loadstring(game:HttpGet("https://pharaohscript.xyz/NEW_FREE.lua", true))()

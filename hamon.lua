@@ -2,13 +2,15 @@
 {TO EXECUTE THIS SCRIPT, YOU NEED THE HAMON SPEC}
 {EVERYTIME YOU USE HIROSIMA AND THEN RESET/DIE, YOU MUST REJOIN SERVER}
 
-Curses:
+Passives:
 
+Stun-Free = No move can remove your ability to use your moves, not even stuns and impales
 Death Energy = Everytime you die, your hitbox remains on the ground, copying your every move
 Conqueror's Hamon = Low-minded people will feel confused due to your aura and presence
 Stand Allergy = Any Pluck attack that is hit on the stand will be reflected to the hamon user
-Admin Bounty = Admins of this game overpower you, seek shelter
 Pillarmen = Pillarmen deal 25% more damage against you
+Conqueror's Hamon = Low-minded people will feel confused due to your aura and presence
+Admin Bounty = Admins of this game overpower you, seek shelter
 bro this cring kid = HACKER!!!!!!!! REPORT!!!!!!!11 IMAGGIN SO BAD
 
 H = Maximum Breath > The user focuses and breathes carefully for 5.5 seconds 
@@ -435,6 +437,16 @@ else
 	chargesfx.Volume = 3
 end
 
+local jumpsfx
+if ntorso:FindFirstChild"Yell" then
+	jumpsfx = ntorso.Rush
+	jumpsfx.SoundId = "rbxassetid://858508159"
+else
+	jumpsfx = Instance.new("Sound",chr)
+	jumpsfx.SoundId = "rbxassetid://858508159"
+	jumpsfx.Volume = 3
+end
+
 local walk = 21
 local jump = 50
 local dmg1 = 12.5
@@ -521,6 +533,8 @@ function standjump()
         sjb.maxForce = Vector3.new(100000, 100000, 100000)
         sjb.Position = hrp.CFrame*CFrame.new(0, 25, -100).p
 	    game.Debris:AddItem(sjb, 1)
+	    jumpevent2:FireServer(BrickColor.new(1009))
+	    jumpsfx:Play()
         wait(1)
         antifling = true
         activu = false
@@ -535,6 +549,9 @@ function standjump()
         sjb.maxForce = Vector3.new(100000, 100000, 100000)
         sjb.Position = hrp.CFrame*CFrame.new(0, 50, -75).p
 	    game.Debris:AddItem(sjb, 1)
+	    jumpevent2:FireServer(BrickColor.new(1009))
+	    jumpsfx:Play()
+	    wait(1)
         antifling = true
         activu = false
         wait(7)
@@ -814,7 +831,7 @@ function strongpunch()
 	coroutine.resume(coroutine.create(function()
 	for _ = 1, 15 do
 		wait()
-        hito2(rightarm, rightarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,8, dmgy, 1.25, 0.25, hrp.CFrame.lookVector * strry, "rbxassetid://", 0.0825, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 10, math.random(9, 11) / 2)
+        hito2(rightarm, rightarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,6, dmgy, 1.25, 0.25, hrp.CFrame.lookVector * strry, "rbxassetid://", 0.0825, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 10, math.random(9, 11) / 2)
 	end
 	end))
 	wait(0.65)
@@ -855,7 +872,7 @@ function ult()
 		wait() --prime
         hito2(rot, rot.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) , 7.5, dmgf, 1, 0.25, hrp.CFrame.lookVector *  0 + Vector3.new(0,-10,0), "rbxassetid://241837157", 0, Color3.new(255, 255, 255),"rbxassetid://", math.random(9, 11) / 10, math.random(9, 11) / 10)
         vampiredashevent:FireServer(BrickColor.new(1009))
-        dg = dg +4
+        dg = dg +1
     end
 	end))
 	wait(0.65)
@@ -910,7 +927,7 @@ function scarletoverdrive()
 	coroutine.resume(coroutine.create(function()
 	for _ = 1, 15 do
 		wait()
-        hito2(leftarm, leftarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,8, dmgr, 1.25, 0.25, hrp.CFrame.lookVector * strry, "rbxassetid://241837157", 0.1, Color3.new(255, 0, 0),"541909983://386946017", math.random(9, 11) / 10, math.random(9, 11) / 2)
+        hito2(leftarm, leftarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,6, dmgr, 1.25, 0.25, hrp.CFrame.lookVector * strry, "rbxassetid://241837157", 0.1, Color3.new(255, 0, 0),"541909983://386946017", math.random(9, 11) / 10, math.random(9, 11) / 2)
 	end
 	end))
 	wait(0.65)
@@ -938,30 +955,6 @@ function optp()
         end
 	end
 end 
-
-
-function op()
-	if activu == true then return end
-	if opcd == true then return end
-	activu = true
-	trailevent:FireServer(stand.StandLarm.RedTrail, true)
-	transparencyevent:FireServer(stand.StandLarm, 0)
-	blockevent:FireServer(true)
-	wait()
-    punchsfx:Play()
-	coroutine.resume(coroutine.create(function()
-	wait(.3)
-	for _ = 1, 50 do
-		wait(.0001)
-        hito(leftarm, leftarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,100, 100, 0, 0, hrp.CFrame.lookVector * 0, "rbxassetid://241837157", 1, Color3.new(0, 255, 0),"541909983://386946017", math.random(9, 11) / 10, math.random(9, 11) / 2)
-	end
-	end))
-	wait()
-	trailevent:FireServer(stand.StandLarm.RedTrail, false)
-	transparencyevent:FireServer(stand.StandLarm, 1)
-	blockevent:FireServer(false)
-	activu = false
-end
 
 mouse.Button1Down:connect(function()
 if ntorso.Anchored == true then return end
@@ -1012,10 +1005,7 @@ if disabled.Value == true then return end
 	end
 	if key == "u" then 
 	    optp()
-	end
-	if key == "j" then
-	    op()
-	end
+    end
 end)
 
 
