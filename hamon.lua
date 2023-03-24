@@ -1,4 +1,4 @@
---[[ Hamon Pluck / Hamon + Samurai Moveset --by a guy named Gonum / HAMON
+--[[ Hamon Pluck / Hamon + Samurai Moveset --by a guy named gonum
 {TO EXECUTE THIS SCRIPT, YOU NEED THE HAMON SPEC}
 {EVERYTIME YOU USE HIROSIMA AND THEN RESET/DIE, YOU MUST REJOIN SERVER}
 
@@ -16,22 +16,21 @@ bro this cring kid = HACKER!!!!!!!! REPORT!!!!!!!11 IMAGGIN SO BAD
 H = Maximum Breath > The user focuses and breathes carefully for 5.5 seconds 
 while thrusting their sword to the ground, 
 producing Hamon energy and making it flow through their veins for 45.5 seconds,
-while simultaniously buffing their strength.
+while simultaniously buffing their strength, in which every seconds, hamon drains.
 
-M1 = Pluck Slash > 12.5 - 15.5 damage, 0.2 seconds cooldown
-Q = Homing Ripple Slashes > 3 - 4 damage per hit (hits 10x), 25 seconds cooldown
-E = Slicing Pluck Overdive > 4 - 4.5 damage per hit, 6 seconds cooldown
-R = Scarlet Overdrive > 35 - 45 damage + fire, 10 seconds cooldown
-T = Observation Ripple > Speed = 30, Jump = 70, 22 seconds cooldown
-Y = Pluck Impale > 20 - 30 damage, 5 seconds cooldown
+M1 = Pluck Slash > 12.5 - 15.5 damage, 0.2 second cooldown
+Q = Homing Ripple Slashes > 2.5+ damage per hit (hits 10x), 25 second cooldown
+E = Sunlight Pluck Overdive > 4+ damage per hit, 6 second cooldown
+R = Scarlet Overdrive > 40+ damage, 10 second cooldown
+T = Zoom Punch > 30+ damage, 8 second cooldown
+Y = Pluck Lunge > 37.5+, 5 second cooldown
 Y + C = Swaying Pluck Combo > Pluck Impale + Sway
-F = Oni Giri > 50 - 75 damage, 25 seconds cooldown
-G = Zoom Punch > 25 - 35 damage, 8 seconds cooldown
-Z = Hamon Infused Leap > x = 0, y = 50, z = -75 - x = 0, y = 75, z = -50, 8 seconds cooldown
-X = Sendo Pluck Block > Reflects Damage upon opponent hitting you, 5 seconds cooldown
-C = Sway > 75 Velocity, 1.3 seconds cooldown
-U = NANI > infinite damage, 0 decades cooldown
-J = HIROSHIMA > infinite damage, 0 decades cooldown
+F = Metal Overdrive > 40+ damage, 25 second cooldown
+G = Ripple Sway > Speed = 30, Jump = 65, 22.5 second cooldown
+Z = Hamon Infused Leap:SKY > Higher from ground, 7 second cooldown
+Z + C = Hamon Infused Leap > Lower from ground, 7 second cooldown
+X = Luck Defense > Block Incoming Attacks, 3 second cooldown
+C = Sway > 100 Velocity, 1.3 second cooldown
 ]]
 
 local mystand = nil
@@ -259,103 +258,6 @@ function pluckvis()
     transparencyevent:FireServer(stand.LuckandPluck.PommelGem, 0)
     transparencyevent:FireServer(stand.LuckandPluck.PommelTop, 0)
 end
-
-local GUIConnections = {}
- 
- 
- 
-function RemakeMenuGui(AbilityName, PowerStat, SpeedStat, DurabilityStat)
-	local Returner = {}
-	pcall(function()
-		for Index, Connection in GUIConnections do
-			if Connection then
-				Connection:Disconnect()
-			end
-		end
-		GUIConnections = {}
-	end)
-	local function MouseOver(GuiObject, EnterText, LeaveText)
-		local Left = false
-		local Enter = GuiObject.MouseEnter:Connect(function()
-			local Index = 1
-			GuiObject.Text = EnterText[Index]
-			coroutine.resume(coroutine.create(function()
-				if #EnterText ~= 1 then
-					repeat
-						wait(0.4)
-						Index = Index + 1
-						GuiObject.Text = EnterText[Index]
-						if Index == #EnterText then
-							Index = 0
-						end
-					until Left == true
-				end
-			end))
-		end)
-		table.insert(GUIConnections, Enter)
-		local Leave = GuiObject.MouseLeave:Connect(function()
-			Left = true
-			GuiObject.Text = LeaveText
-		end)
-		table.insert(GUIConnections, Leave)
-	end
-	if plr.PlayerGui:FindFirstChild("MenuGUI") then
-		if plr.PlayerGui.MenuGUI:FindFirstChild("Background") then
-			for Index, Child in next, plr.PlayerGui.MenuGUI.Background:GetChildren() do
-				if Child:IsA("TextLabel") then
-					if Child.Name == "Power" then
-						Child.Visible = false
-						local Clone = Child:Clone()
-						Clone.Name = "NewStat_"..Child.Name
-						Clone.Parent = Child.Parent
-						Clone.Visible = true
-						Clone.Text = "Destructive Power"
-						MouseOver(Clone, PowerStat, "Destructive Power")
-						Child:Destroy()
-						Returner.Power = Clone
-					elseif Child.Name == "Speed" then
-						Child.Visible = false
-						local Clone = Child:Clone()
-						Clone.Name = "NewStat_"..Child.Name
-						Clone.Parent = Child.Parent
-						Clone.Visible = true
-						Clone.Text = "Speed"
-						MouseOver(Clone, SpeedStat, "Speed")
-						Child:Destroy()
-						Returner.Speed = Clone
-					elseif Child.Name == "Durability" then
-						Child.Visible = false
-						local Clone = Child:Clone()
-						Clone.Name = "NewStat_"..Child.Name
-						Clone.Parent = Child.Parent
-						Clone.Visible = true
-						Clone.Text = "Durability"
-						MouseOver(Clone, DurabilityStat, "Durability")
-						Child:Destroy()
-						Returner.Durability = Clone
-					elseif Child.Name == "Ability" then
-						Child.Visible = false
-						local Clone = Child:Clone()
-						Clone.Name = "NewStat_"..Child.Name
-						Clone.Parent = Child.Parent
-						Clone.Visible = true
-						Clone.Text = AbilityName
-						Child:Destroy()
-						Returner.Ability = Clone
-					end
-				end
-			end
-		end
-	end
-	if Returner.Power then
-		return Returner
-	else
-		return nil
-	end
-end
- 
-RemakeMenuGui("Pluck", {"A/A+"}, {"S+"}, {"B"})
-
 --Sound
 local dodgesfx
 
@@ -434,7 +336,7 @@ if ntorso:FindFirstChild"Yell" then
 else
 	chargesfx = Instance.new("Sound",chr)
 	chargesfx.SoundId = "rbxassetid://2531000707"
-	chargesfx.Volume = 3
+	chargesfx.Volume = 1.2
 end
 
 local jumpsfx
@@ -447,19 +349,12 @@ else
 	jumpsfx.Volume = 3
 end
 
-local walk = 21
-local jump = 50
-local dmg1 = 12.5
-local dmgq = 3
-local dmge = 4
-local dmgr = 35
-local strry = 40
-local dmgy = 20
-local dmgf = 50
-local dmgg = 25
 local dg = 0
 local fov = 70
 local buffed = false
+local walk = 20
+local jump = 50
+local r = 0
 
 local dodgecooldown = false
 function dodge()
@@ -473,13 +368,13 @@ if dodgecooldown == true then return end
 	local boopyve = Instance.new("BodyVelocity")
     boopyve.MaxForce = Vector3.new(100000, 0, 100000)
     boopyve.P = math.huge
-    boopyve.Velocity = hrp.CFrame.lookVector * 75
+    boopyve.Velocity = hrp.CFrame.lookVector * 100
     boopyve.Parent = chr.HumanoidRootPart
 	game.Debris:AddItem(boopyve, 0.25)
 	wait(0.4)
 	activu = false
 	rollanim:Stop()
-	wait(1.3) -- cooldown
+	wait(1.3)
 	dodgecooldown = false	
 end	
 
@@ -501,7 +396,7 @@ function shinyblade()
 	wait(1)
     activu = false
     walk = 30
-    jump = 70
+    jump = 65
     human.WalkSpeed = walk
     human.JumpPower = jump
     for _ = 1, 20 do
@@ -516,7 +411,7 @@ function shinyblade()
     jump = 50
     human.WalkSpeed = walk
     human.JumpPower = jump
-	wait(22)
+	wait(22.5)
 	shinybladecooldown = false
 end
 
@@ -527,38 +422,46 @@ function standjump()
     if dodgecooldown == true then
         standjumpcooldown = true
         activu = true
-        antifling = false
+        antifling = true
         wait(0.1)
 	    local sjb = Instance.new("BodyPosition", hrp)
         sjb.maxForce = Vector3.new(100000, 100000, 100000)
-        sjb.Position = hrp.CFrame*CFrame.new(0, 25, -100).p
-	    game.Debris:AddItem(sjb, 1)
-	    jumpevent2:FireServer(BrickColor.new(1009))
+        if r <= 10 then
+            sjb.Position = hrp.CFrame*CFrame.new(0, 25, -60).p
+        elseif r > 10 then 
+            sjb.Position = hrp.CFrame*CFrame.new(0, 80, -40).p
+        end
+	    game.Debris:AddItem(sjb, .25)
+	    jumpevent:FireServer(BrickColor.new(1009))
 	    jumpsfx:Play()
-        wait(1)
-        antifling = true
+        wait(.4)
+        antifling = false
         activu = false
         wait(7)
         standjumpcooldown = false
     elseif dodgecooldown == false then
         standjumpcooldown = true
         activu = true
-        antifling = false
+        antifling = true
         wait(0.1)
 	    local sjb = Instance.new("BodyPosition", hrp)
         sjb.maxForce = Vector3.new(100000, 100000, 100000)
-        sjb.Position = hrp.CFrame*CFrame.new(0, 50, -75).p
-	    game.Debris:AddItem(sjb, 1)
-	    jumpevent2:FireServer(BrickColor.new(1009))
+        if r <= 10 then
+            sjb.Position = hrp.CFrame*CFrame.new(0, 40, -35).p
+        elseif r > 10 then 
+            sjb.Position = hrp.CFrame*CFrame.new(0, 60, -70).p
+        end
+	    game.Debris:AddItem(sjb, .25)
+	    jumpevent:FireServer(BrickColor.new(1009))
 	    jumpsfx:Play()
-	    wait(1)
-        antifling = true
+	    wait(.4)
+        antifling = false
         activu = false
         wait(7)
         standjumpcooldown = false
     end
 end
-
+poseevent:FireServer(true)
 local chargecooldown = false
 function charge()
     if activu == true then return end
@@ -574,39 +477,28 @@ function charge()
         wait(2)
         chargesfx:Play()
         buffed = true
+        blockevent:FireServer(true)
         jumpevent2:FireServer(BrickColor.new(1009))
-        outlineevent:FireServer(false)
         outlineevent:FireServer(true)
         transparencyevent:FireServer(stand.LuckandPluck.HamonBlade, 0)
         wait(3)
-
         activu = false
         standjumpcooldown = false
         human.WalkSpeed = walk
         human.JumpPower = jump
-        poseevent:FireServer(true)
-        dmg1 = 15.5
-        dmgq = 4
-        dmge = 4.5
-        dmgr = 45
-        strry = 60
-        dmgy = 30
-        dmgf = 75
-        dmgg = 35
-        wait(45.5)
-        chargecooldown = false
-        buffed = false
-        buff()
-        transparencyevent:FireServer(stand.LuckandPluck.HamonBlade, 1)
-        poseevent:FireServer(false)
-        dmg1 = 12.5
-        dmgq = 3
-        dmge = 4
-        dmgr = 35
-        strry = 50
-        dmgy = 25
-        dmgf = 50
-        dmgg = 40
+        blockevent:FireServer(false)
+        r = 20
+        coroutine.resume(coroutine.create(function()
+		repeat
+		    wait(.1)
+		    r = r - 0.05
+		until r <= 0
+		r = 0
+		buffed = false
+		buff()
+		transparencyevent:FireServer(stand.LuckandPluck.HamonBlade, 1)
+		chargecooldown = false
+	end))
     end
 end
 
@@ -648,7 +540,7 @@ function block()
 	human.JumpPower = jump
 	--transparencyevent:FireServer(stand.LuckandPluck.HamonBlade, 1)
 	activu = false
-    wait(5)
+    wait(3)
     blockcooldown = false
 end
 local posing = false
@@ -712,11 +604,11 @@ if activu == true then return end
 	    trailevent:FireServer(stand.LuckandPluck.Blade.Trail, true)
 	    transparencyevent:FireServer(stand.StandRarm, 0.825)
 	--transparencyevent:FireServer(stand.LuckandPluck.HamonBlade, 0.5)
-		wait(.5)
+		wait(.3)
 		coroutine.resume(coroutine.create(function()
-		for _ = 1, 5 do
-		wait()
-		hito(stand.LuckandPluck.HamonBlade, stand.LuckandPluck.HamonBlade.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,7.5, dmg1, 0.5, 0.25, hrp.CFrame.lookVector * 12.5, "rbxassetid://", 0.075, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 11, 5)
+		for _ = 1, 10 do
+		wait(.03)
+		hito(stand.LuckandPluck.HamonBlade, stand.LuckandPluck.HamonBlade.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,7.5, 18.5 + r / 4, 0.5, 0.25, hrp.CFrame.lookVector * 10, "rbxassetid://", 0.075, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 11, 5)
 		end
 		end))
 	elseif leftorright == true then
@@ -726,15 +618,15 @@ if activu == true then return end
 	    transparencyevent:FireServer(stand.StandRarm, 0.825)
 	--transparencyevent:FireServer(stand.LuckandPluck.HamonBlade, 0.5)
 	    blockevent:FireServer(true)
-		wait(0.5)
+		wait(.3)
 		coroutine.resume(coroutine.create(function()
-		for _ = 1, 5 do
-		wait()
-		hito(stand.LuckandPluck.HamonBlade, stand.LuckandPluck.HamonBlade.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,7.5, dmg1, 0.5, 0.25, hrp.CFrame.lookVector * 12.5, "rbxassetid://", 0.075, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 11, 5)
+		for _ = 1, 10 do
+		wait(.03)
+		hito(stand.LuckandPluck.HamonBlade, stand.LuckandPluck.HamonBlade.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,7.5, 18.5 + r / 4, 0.5, 0.25, hrp.CFrame.lookVector * 10, "rbxassetid://", 0.075, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 11, 5)
 		end
 		end))
 	end
-	wait(0.1)
+	wait(0.2)
 	human.JumpPower = jump
 	activu = false
 	trailevent:FireServer(stand.LuckandPluck.Blade.Trail, false)
@@ -760,7 +652,7 @@ function tp()
             trailevent:FireServer(stand.LuckandPluck.Blade.Trail, true)
             barrageanim:Play(0.1, 1, 2)
             for _ = 1, 10 do
-                slashevent:FireServer(ho, dmgq,.25,Vector3.new(0,-5,0))
+                slashevent:FireServer(ho, 2.5 + r / 10,.25,Vector3.new(0,-5,0))
                 wait(.001)
             end
             trailevent:FireServer(stand.LuckandPluck.Blade.Trail, false)
@@ -790,13 +682,13 @@ function barrage()
 	human.JumpPower = 0
 	human.WalkSpeed = 6
 	repeat
-		EHMMM = EHMMM + 1
+		EHMMM = EHMMM + 0.5
 	trailevent:FireServer(stand.LuckandPluck.Blade.Trail, true)
         punchsfx:Play()
-		hito(stand.LuckandPluck.HamonBlade, stand.LuckandPluck.HamonBlade.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,6.75, dmge, 0.1, 0.1, hrp.CFrame.lookVector * 1.25, "rbxassetid://", 0.125, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 10, math.random(9, 11) / 7)
-		hito(stand.LuckandPluck.HamonBlade, stand.LuckandPluck.HamonBlade.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,6.75, dmge, 0.1, 0.1, hrp.CFrame.lookVector * 1.25, "rbxassetid://", 0.125, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 10, math.random(9, 11) / 7)
-		wait(0.1)
-	until bep == false or disabled.Value == true or EHMMM >= 60
+		hito(stand.LuckandPluck.HamonBlade, stand.LuckandPluck.HamonBlade.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,6.75, 4 + r / 10, 0.1, 0.1, hrp.CFrame.lookVector * 1.25, "rbxassetid://", 0.125, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 10, math.random(9, 11) / 7)
+		hito(stand.LuckandPluck.HamonBlade, stand.LuckandPluck.HamonBlade.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,6.75, 4 + r / 10, 0.1, 0.1, hrp.CFrame.lookVector * 1.25, "rbxassetid://", 0.125, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 10, math.random(9, 11) / 7)
+		wait(.05)
+	until bep == false or disabled.Value == true or EHMMM >= 30
 	--rushsfx:Stop()
     activu = false
 	barrageanim:Stop(0.1)
@@ -830,8 +722,8 @@ function strongpunch()
 	--game.Debris:AddItem(boopyve, .3)
 	coroutine.resume(coroutine.create(function()
 	for _ = 1, 15 do
-		wait()
-        hito2(rightarm, rightarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,6, dmgy, 1.25, 0.25, hrp.CFrame.lookVector * strry, "rbxassetid://", 0.0825, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 10, math.random(9, 11) / 2)
+		wait(.03)
+        hito2(rightarm, rightarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,3, 37.5 + r, 0.5, 0.25, hrp.CFrame.lookVector * 100, "rbxassetid://", 0.0825, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 10, math.random(9, 11) / 2)
 	end
 	end))
 	wait(0.65)
@@ -870,7 +762,7 @@ function ult()
 	coroutine.resume(coroutine.create(function()
 	for _ = 1, 15 do
 		wait() --prime
-        hito2(rot, rot.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) , 7.5, dmgf, 1, 0.25, hrp.CFrame.lookVector *  0 + Vector3.new(0,-10,0), "rbxassetid://241837157", 0, Color3.new(255, 255, 255),"rbxassetid://", math.random(9, 11) / 10, math.random(9, 11) / 10)
+        hito2(rot, rot.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) , 5, 40 + r, 0.5, 0.25, hrp.CFrame.lookVector *  0 + Vector3.new(0,-10,0), "rbxassetid://241837157", 0, Color3.new(255, 255, 255),"rbxassetid://", math.random(9, 11) / 10, math.random(9, 11) / 10)
         vampiredashevent:FireServer(BrickColor.new(1009))
         dg = dg +1
     end
@@ -883,7 +775,7 @@ function ult()
 	--transparencyevent:FireServer(stand.LuckandPluck.HamonBlade, 1)
 	trailevent:FireServer(stand.LuckandPluck.Blade.Trail, false)
 	activu = false
-	wait(23)
+	wait(25)
 	ultcooldown = false
 end
 
@@ -897,10 +789,14 @@ function zoompunch()
 	zoom:Play(0.1, 1, 1)
 	pluckinvis()
 	wait(.3)
+	chargesfx:Play()
 	transparencyevent:FireServer(stand.ZoomArm, 0)
 	wait(.3)
-	hito(stand.ZoomArm, stand.ZoomArm.CFrame * CFrame.new(0, 1, 0) * CFrame.new(math.random(0.25, -0.25), math.random(0.25, -0.25), math.random(0.25, -0.25)) ,9, dmgg, 0.5, 0.25, hrp.CFrame.lookVector * -50, "rbxassetid://", 0.075, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 11, 5)
-	wait(.3)
+	for _ = 1, 15 do
+	    wait(.03)
+	    hito(stand.ZoomArm, stand.ZoomArm.CFrame * CFrame.new(0, 1, 0) * CFrame.new(math.random(0.25, -0.25), math.random(0.25, -0.25), math.random(0.25, -0.25)) ,6, 30 + r, 1, 0.1, hrp.CFrame.lookVector * -50, "rbxassetid://", 0.075, Color3.fromRGB(245, 205, 48),"rbxassetid://566593606", math.random(9, 11) / 11, 5)
+	end
+	wait()
 	pluckvis()
 	if buffed == false then
 	    transparencyevent:FireServer(stand.LuckandPluck.HamonBlade, 1)
@@ -910,8 +806,6 @@ function zoompunch()
 	wait(7.1)
 	zoomcooldown = false
 end
-	
-	
 
 local scarletoverdricecd = false
 function scarletoverdrive()
@@ -922,12 +816,13 @@ function scarletoverdrive()
 	trailevent:FireServer(stand.StandLarm.RedTrail, true)
 	transparencyevent:FireServer(stand.StandLarm, 0.5)
 	strongpunchanim:Play(0.1, 1, 1)
+	chargesfx:Play()
 	wait(0.5)
     punchsfx:Play()
 	coroutine.resume(coroutine.create(function()
 	for _ = 1, 15 do
-		wait()
-        hito2(leftarm, leftarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,6, dmgr, 1.25, 0.25, hrp.CFrame.lookVector * strry, "rbxassetid://241837157", 0.1, Color3.new(255, 0, 0),"541909983://386946017", math.random(9, 11) / 10, math.random(9, 11) / 2)
+		wait(.03)
+        hito2(leftarm, leftarm.CFrame * CFrame.new(0, -1, 0) * CFrame.new(math.random(-0.25, 0.25), math.random(-0.25, 0.25), math.random(-0.25, 0.25)) ,2.5, 40 + r, 0.75, 0.25, hrp.CFrame.lookVector * 60, "rbxassetid://241837157", 0.1, Color3.new(255, 0, 0),"541909983://386946017", math.random(9, 11) / 10, math.random(9, 11) / 2)
 	end
 	end))
 	wait(0.65)
@@ -937,24 +832,6 @@ function scarletoverdrive()
 	wait(9)
 	scarletoverdricecd = false
 end
-
-function optp()
-	if activu == true then return end
-	local ho = mouse.Target.Parent:FindFirstChild("Humanoid")
-	if mouse.Target and ho then
-		local horp = mouse.Target.Parent:FindFirstChild("HumanoidRootPart")
-		local magnitude = (horp.Position - hrp.Position).magnitude
-		if 0 < magnitude then
-            tpcooldown = true
-            local char = mouse.Target.Parent
-            buff()
-            for _ = 1, 50 do
-                slashevent:FireServer(ho, 100, math.huge,Vector3.new(0,0,0))
-                wait(.01)
-            end
-        end
-	end
-end 
 
 mouse.Button1Down:connect(function()
 if ntorso.Anchored == true then return end
@@ -1003,9 +880,6 @@ if disabled.Value == true then return end
 	if key == "n" then
 		taunt()
 	end
-	if key == "u" then 
-	    optp()
-    end
 end)
 
 
