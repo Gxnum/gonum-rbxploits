@@ -1,0 +1,1 @@
+loadstring(game:HttpGet(("https://raw.githubusercontent.com/cheesynob39/SB-SR/main/Slap_Royale.lua")))()
